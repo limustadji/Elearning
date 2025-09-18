@@ -50,7 +50,7 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login", // Arahkan ke halaman login kustom
+    signIn: "/login",
   },
 };
 

@@ -26,7 +26,7 @@ const Switch = ({
       ></div>
 
       <div
-        className="absolute left-[2px] top-[2px] bg-gray-50 border-gray-300 border rounded-full 
+        className="absolute left-0.5 top-0.5 bg-gray-50 border-border border rounded-full 
                    h-5 w-5 transition-transform peer-checked:translate-x-full peer-checked:border-white"
       ></div>
     </label>

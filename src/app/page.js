@@ -1,31 +1,18 @@
-import Button from "@/components/button/Button";
-import Checkbox from "@/components/button/Checkbox";
-import Radio from "@/components/button/Radio";
-import Switch from "@/components/button/Switch";
-import UnstyledButton from "@/components/button/UnstyledButton";
+import Step from "@/components/step/Step";
+import Stepper from "@/components/step/Stepper";
 
-export default function Home() {
+export default function MyPage() {
+  // You can control the current step with state, e.g., const [currentStep, setCurrentStep] = useState(1);
+  const currentStep = 0;
+
   return (
-    <div className="p-10 bg-background space-y-12">
-      {/* ... (Semua komponen lainnya) ... */}
-
-      {/* --- Bagian Unstyled Button --- */}
-      <div>
-        <h1 className="text-4xl font-bold mb-8 text-text-primary">
-          Unstyled Button Components
-        </h1>
-        <div className="flex flex-col items-start space-y-4">
-          <UnstyledButton>Button</UnstyledButton>
-          <UnstyledButton iconLeft>Button</UnstyledButton>
-          <UnstyledButton iconRight>Button</UnstyledButton>
-          <UnstyledButton iconRight iconLeft>
-            Button
-          </UnstyledButton>
-          <UnstyledButton disabled iconLeft>
-            Disabled Button
-          </UnstyledButton>
-        </div>
-      </div>
+    <div className="p-10">
+      <h1 className="text-2xl font-bold mb-6">Course Progress</h1>
+      <Stepper currentStep={currentStep}>
+        <Step title="Chapter 1" />
+        <Step title="Chapter 2" />
+        <Step title="Chapter 3" />
+      </Stepper>
     </div>
   );
 }

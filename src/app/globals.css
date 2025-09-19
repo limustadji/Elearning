@@ -1,33 +1,30 @@
 @import "tailwindcss";
 
-:root {
-  /* Light Mode */
-  --background-hsl: 50, 100%, 97.65%;
-  --foreground-hsl: 0 0% 100%;
-  --foreground-secondary-hsl: 220, 2.48%, 76.27%;
-  --foreground-disabled-hsl: 225, 2.08%, 62.35%;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Dark Mode */
+    /* Dark Mode  */
     --background-hsl: 216, 18.07%, 16.27%;
-    --foreground-hsl: 220, 4.23%, 13.92%;
-    --foreground-secondary-hsl: 0, 0%, 20%;
-    --foreground-disabled-hsl: 265, 10.17%, 23.14%;
+    --foreground-hsl: 0 0% 100%;
+    --foreground-secondary-hsl: 220, 2.48%, 76.27%;
+    --foreground-disabled-hsl: 225, 2.08%, 62.35%;
   }
 }
 
-@theme {
+:root {
+  /* Light Mode */
+  --background-hsl: 50, 100%, 97.65%;
+  --foreground-hsl: 220, 4.23%, 13.92%;
+  --foreground-secondary-hsl: 0, 0%, 20%;
+  --foreground-disabled-hsl: 265, 10.17%, 23.14%;
+}
+@theme inline {
   --color-background: hsl(var(--background-hsl));
   --color-foreground: hsl(var(--foreground-hsl));
-  --font-sans: var(--font-dm-sans);
+  --font-dmsans: var(--font-dmsans);
   --font-poppins: var(--font-poppins);
 
   /* Palet Warna Semantik (otomatis light/dark mode) */
-  --color-background-base: hsl(var(--background-hsl));
-  --color-background-secondary: hsl(0 0% 100%);
-  --color-background-border: hsl(265, 10.17%, 23.14%);
+  --color-border: hsl(265, 10.17%, 23.14%);
   --color-text-primary: hsl(var(--foreground-hsl));
   --color-text-secondary: hsl(var(--foreground-secondary-hsl));
   --color-text-disabled: hsl(var(--foreground-disabled-hsl));
@@ -129,9 +126,9 @@
 
 @layer base {
   body {
-    background: hsl(var(--background-hsl));
-    color: hsl(var(--foreground-hsl));
-    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-dmsans);
     letter-spacing: var(--letter-spacing-normal);
     line-height: var(--line-height-normal);
   }
@@ -141,6 +138,7 @@
     letter-spacing: var(--letter-spacing-heading);
     line-height: var(--line-height-heading);
     font-family: var(--font-poppins);
+    font-weight: 900;
   }
   h4,
   h5,
@@ -148,5 +146,6 @@
     letter-spacing: var(--letter-spacing-heading);
     line-height: var(--line-height-heading4);
     font-family: var(--font-poppins);
+    font-weight: 900;
   }
 }

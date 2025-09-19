@@ -25,8 +25,6 @@
 
   /* Palet Warna Semantik (otomatis light/dark mode) */
   --color-border: hsl(265, 10.17%, 23.14%);
-  --color-text-primary: hsl(var(--foreground-hsl));
-  --color-text-secondary: hsl(var(--foreground-secondary-hsl));
   --color-text-disabled: hsl(var(--foreground-disabled-hsl));
 
   /* greyscale palette */
@@ -94,7 +92,7 @@
   /* error palette */
   --color-error-pressed: hsl(5.19, 79.41%, 40%);
   --color-error-hover: hsl(9.57, 75.2%, 49.02%);
-  --color-error-default: hsl(33.13, 29%, 45.29%);
+  --color-error-default: hsl(13.87, 100%, 58.43%);
   --color-error-background: hsl(25.12, 87.76%, 90.39%);
   --color-error-gradient: linear-gradient(
     to right,
@@ -112,11 +110,6 @@
   --font-size-body-md: 1rem;
   --font-size-body-sm: 0.875rem;
 
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
   --letter-spacing-normal: 0.0125rem;
   --letter-spacing-heading: 0;
   --line-height-normal: 1.4;
@@ -125,12 +118,30 @@
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
   body {
     background: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-dmsans);
     letter-spacing: var(--letter-spacing-normal);
     line-height: var(--line-height-normal);
+    -webkit-font-smoothing: antialiased;
+  }
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
   }
   h1,
   h2,

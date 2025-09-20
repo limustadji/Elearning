@@ -2,7 +2,7 @@ import Navbar from "@/components/navigation/Navbar";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-8 p-8 bg-gray-50">
+    <div className="flex flex-col gap-8 p-8 ">
       <div>
         <h2 className="text-xl font-bold mb-4">1. Navbar: Main (Logged In)</h2>
         <Navbar isLoggedIn={true} navType="main" />

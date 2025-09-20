@@ -1,3 +1,4 @@
+// src/components/dropdown/ProgressDropdown.js
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
@@ -30,14 +31,14 @@ const ProgressDropdown = ({
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-x-2 cursor-pointer"
       >
-        <div className="w-35 bg-gray-200 rounded-full h-2">
+        <div className="hidden md:block w-24 bg-gray-200 rounded-full h-2">
           <div
             className="bg-secondary-default h-2 rounded-full"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
         <p
-          className={`text-base font-medium transition-colors ${
+          className={`text-sm font-medium transition-colors ${
             isOpen ? "text-primary-default" : "text-foreground"
           }`}
         >
@@ -45,12 +46,11 @@ const ProgressDropdown = ({
         </p>
         <ChevronDownIcon
           className={`w-4 h-4 transition-all ${
-            isOpen ? "text-primary-default rotate-180" : "text-foreground"
+            isOpen ? "text-primary-default rotate-180" : "text-gray-500"
           }`}
         />
       </button>
 
-      {/* Panel Dropdown/Tooltip */}
       {isOpen && (
         <div
           className="absolute right-0 mt-4 w-99 bg-white rounded-xl shadow-lg p-6 z-10 

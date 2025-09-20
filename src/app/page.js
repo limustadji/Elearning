@@ -1,18 +1,54 @@
-import Step from "@/components/step/Step";
-import Stepper from "@/components/step/Stepper";
+import Navbar from "@/components/navigation/Navbar";
 
-export default function MyPage() {
-  // You can control the current step with state, e.g., const [currentStep, setCurrentStep] = useState(1);
-  const currentStep = 0;
-
+export default function HomePage() {
   return (
-    <div className="p-10">
-      <h1 className="text-2xl font-bold mb-6">Course Progress</h1>
-      <Stepper currentStep={currentStep}>
-        <Step title="Chapter 1" />
-        <Step title="Chapter 2" />
-        <Step title="Chapter 3" />
-      </Stepper>
+    <div className="flex flex-col gap-8 p-8 bg-gray-50">
+      <div>
+        <h2 className="text-xl font-bold mb-4">1. Navbar: Main (Logged In)</h2>
+        <Navbar isLoggedIn={true} navType="main" />
+      </div>
+      <hr />
+      <div>
+        <h2 className="text-xl font-bold mb-4">2. Navbar: Main (Logged Out)</h2>
+        <Navbar isLoggedIn={false} navType="main" />
+      </div>
+      <hr />
+      <div>
+        <h2 className="text-xl font-bold mb-4">3. Navbar: Payment Flow</h2>
+        <Navbar isLoggedIn={true} navType="payment" currentStep={1} />
+      </div>
+      <hr />
+      <div>
+        <h2 className="text-xl font-bold mb-4">
+          4. Navbar: Authentication (Logo Saja)
+        </h2>
+        <Navbar navType="auth" />
+      </div>
+      <hr />
+      <div>
+        <h2 className="text-xl font-bold mb-4">
+          5. Navbar: Course (Completed)
+        </h2>
+        <Navbar
+          isLoggedIn={true}
+          navType="course"
+          courseState="completed"
+          courseTitle="Foundations of User Experience Design"
+        />
+      </div>
+      <hr />
+      <div>
+        <h2 className="text-xl font-bold mb-4">
+          6. Navbar: Course (In Progress)
+        </h2>
+        <Navbar
+          isLoggedIn={true}
+          navType="course"
+          courseState="inProgress"
+          courseTitle="Foundations of User Experience Design"
+          progress={83}
+        />
+      </div>
     </div>
   );
 }

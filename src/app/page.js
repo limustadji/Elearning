@@ -1,53 +1,62 @@
+import CourseCard from "@/components/card/CourseCard";
 import Navbar from "@/components/navigation/Navbar";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-8 p-8 ">
+    <div className="flex min-h-screen flex-col gap-8 bg-gray-50 p-8">
       <div>
-        <h2 className="text-xl font-bold mb-4">1. Navbar: Main (Logged In)</h2>
-        <Navbar isLoggedIn={true} navType="main" />
+        <h2 className="mb-4 text-2xl font-bold text-center">Desktop Cards</h2>
+        <div className="flex flex-wrap items-start justify-center gap-8">
+          <CourseCard
+            variant="default"
+            title="Big 4 Auditor Financial Analyst"
+            description="Mulai transformasi dengan instruktur profesional, harga yang terjangkau, dan..."
+            authorName="Jenna Ortega"
+            authorRole="Senior Accountant"
+            authorCompany="Gojek"
+            authorImage="/assets/images/avatar.jpg"
+            rating={3.5}
+            reviewCount={86}
+            price={300000}
+            imageUrl="/assets/images/cover7.jpg"
+          />
+
+          <CourseCard
+            variant="discount"
+            title="UI/UX Design for Beginners"
+            description="Belajar dasar-dasar desain antarmuka dan pengalaman pengguna dari awal."
+            authorName="John Doe"
+            authorRole="Product Designer"
+            authorCompany="TechCorp"
+            authorImage="/assets/images/avatar2.jpg"
+            rating={4.5}
+            reviewCount={120}
+            price={500000}
+            discountedPrice={250000}
+            imageUrl="/assets/images/cover1.jpg"
+          />
+        </div>
       </div>
+
       <hr />
+
       <div>
-        <h2 className="text-xl font-bold mb-4">2. Navbar: Main (Logged Out)</h2>
-        <Navbar isLoggedIn={false} navType="main" />
-      </div>
-      <hr />
-      <div>
-        <h2 className="text-xl font-bold mb-4">3. Navbar: Payment Flow</h2>
-        <Navbar isLoggedIn={true} navType="payment" currentStep={1} />
-      </div>
-      <hr />
-      <div>
-        <h2 className="text-xl font-bold mb-4">
-          4. Navbar: Authentication (Logo Saja)
+        <h2 className="mb-4 text-2xl font-bold text-center">
+          Mobile Card (Fixed 320px)
         </h2>
-        <Navbar navType="auth" />
-      </div>
-      <hr />
-      <div>
-        <h2 className="text-xl font-bold mb-4">
-          5. Navbar: Course (Completed)
-        </h2>
-        <Navbar
-          isLoggedIn={true}
-          navType="course"
-          courseState="completed"
-          courseTitle="Foundations of User Experience Design"
-        />
-      </div>
-      <hr />
-      <div>
-        <h2 className="text-xl font-bold mb-4">
-          6. Navbar: Course (In Progress)
-        </h2>
-        <Navbar
-          isLoggedIn={true}
-          navType="course"
-          courseState="inProgress"
-          courseTitle="Foundations of User Experience Design"
-          progress={83}
-        />
+        <div className="flex justify-center">
+          <CourseCard
+            variant="mobile"
+            title="Digital Marketing Masterclass"
+            authorName="Jane Smith"
+            authorRole="Marketing Specialist"
+            authorImage="/assets/images/avatar4.jpg"
+            rating={4.8}
+            reviewCount={95}
+            price={450000}
+            imageUrl="/assets/images/cover4.jpg"
+          />
+        </div>
       </div>
     </div>
   );

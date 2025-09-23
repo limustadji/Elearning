@@ -20,6 +20,7 @@
 @theme inline {
   --color-background: hsl(var(--background-hsl));
   --color-foreground: hsl(var(--foreground-secondary-hsl));
+  --color-primary-foreground: hsl(var(--color-foreground-hsl));
   --font-dmsans: var(--font-dmsans);
   --font-poppins: var(--font-poppins);
 

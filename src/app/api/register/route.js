@@ -30,7 +30,7 @@ export async function POST(request) {
         name,
         email,
         password_hash: hashedPassword,
-        role: "student", // Default role saat registrasi
+        role: "student",
       },
     });
 

@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function GET(request) {
   try {
@@ -9,9 +7,8 @@ export async function GET(request) {
       include: {
         instructor: {
           select: {
-            user: {
-              select: { name: true, profile_picture_url: true },
-            },
+            name: true,
+            profile_picture_url: true,
           },
         },
         chapters: {

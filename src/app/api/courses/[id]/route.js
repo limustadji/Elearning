@@ -35,6 +35,7 @@ export async function GET(request, { params }) {
               select: {
                 title: true,
                 video_url: true,
+                duration: true, // Sertakan durasi
               },
             },
           },
@@ -49,8 +50,14 @@ export async function GET(request, { params }) {
           },
         },
         reviews: {
-          select: {
-            rating: true,
+          // Ubah bagian ini
+          include: {
+            user: {
+              select: {
+                name: true,
+                profile_picture_url: true,
+              },
+            },
           },
         },
       },
@@ -60,7 +67,7 @@ export async function GET(request, { params }) {
       return new NextResponse("Course not found", { status: 404 });
     }
 
-    // Menghitung rata-rata rating
+    // Menghitung rata-rata rating dari data review yang sudah di-fetch
     const totalReviews = course.reviews.length;
     const averageRating =
       totalReviews > 0
@@ -68,10 +75,18 @@ export async function GET(request, { params }) {
           totalReviews
         : 0;
 
-    // Menghapus data reviews yang tidak perlu dikirim ke client
+    // Simpan review yang sudah diproses
+    const reviewsWithUserDetails = course.reviews;
+    // Hapus data review mentah dari objek course utama
     delete course.reviews;
 
-    return NextResponse.json({ ...course, averageRating, totalReviews });
+    // Kirim kembali course, review yang sudah diproses, dan data agregat
+    return NextResponse.json({
+      ...course,
+      reviews: reviewsWithUserDetails,
+      averageRating,
+      totalReviews,
+    });
   } catch (error) {
     console.error("Error fetching course:", error);
     return new NextResponse("Internal Server Error", { status: 500 });

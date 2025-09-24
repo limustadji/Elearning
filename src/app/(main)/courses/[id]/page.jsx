@@ -7,6 +7,7 @@ import TutorProfile from "@/components/detailproduk/TutorProfile";
 import KurikulumAccordion from "@/components/detailproduk/KurikulumAccordion";
 import OrderSummaryCard from "@/components/card/OrderSummaryCard";
 import CourseCard from "@/components/card/CourseCard";
+import ReviewCard from "@/components/card/ReviewCard";
 
 async function getCourseData(id) {
   const res = await fetch(
@@ -41,7 +42,13 @@ export default async function DetailProdukPage({ params }) {
 
   const courseIncludes = [
     { icon: "/assets/icons/icon-file-check.svg", text: "Ujian Akhir" },
-    { icon: "/assets/icons/icon-video.svg", text: "49 Video" },
+    {
+      icon: "/assets/icons/icon-video.svg",
+      text: `${course.chapters.reduce(
+        (acc, chapter) => acc + chapter.lessons.length,
+        0
+      )} Video`,
+    },
     { icon: "/assets/icons/icon-book.svg", text: "7 Dokumen" },
     { icon: "/assets/icons/icon-file-certificate.svg", text: "Sertifikat" },
     { icon: "/assets/icons/icon-file-edit.svg", text: "Pretest" },
@@ -51,7 +58,7 @@ export default async function DetailProdukPage({ params }) {
     title: chapter.title,
     lessons: chapter.lessons.map((lesson) => ({
       title: lesson.title,
-      duration: "12 Menit",
+      duration: `${lesson.duration || 0} Menit`,
     })),
   }));
 
@@ -67,7 +74,7 @@ export default async function DetailProdukPage({ params }) {
   const cardStyle = "p-8 bg-white border border-gray-200 rounded-xl shadow-sm";
 
   return (
-    <div className="bg-white">
+    <div>
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8">
           <Breadcrumb items={breadcrumb} />
@@ -75,13 +82,25 @@ export default async function DetailProdukPage({ params }) {
 
         <DetailProdukHero
           title={course.title}
-          subtitle={course.description} // Menggunakan deskripsi utama sebagai subtitle hero
+          subtitle={course.description}
           rating={course.averageRating.toFixed(1)}
           reviewCount={course.totalReviews}
           imageUrl={course.thumbnail_url || "/assets/images/heroimage.jpg"}
         />
 
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-16">
+        <div className="lg:hidden my-8">
+          <OrderSummaryCard
+            title={course.title}
+            price={Number(course.price)}
+            discountedPrice={Number(course.price) / 2}
+            discountPercentage={50}
+            specialOfferText="Penawaran spesial tersisa 2 hari lagi!"
+            includes={courseIncludes}
+            language="Bahasa Indonesia"
+          />
+        </div>
+
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8 lg:py-16">
           <div className="lg:col-span-2 flex flex-col gap-8">
             <div className={cardStyle}>
               <h2 className="text-2xl font-bold text-foreground">Deskripsi</h2>
@@ -109,26 +128,41 @@ export default async function DetailProdukPage({ params }) {
             )}
 
             <div className={cardStyle}>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h2 className="text-2xl font-bold text-foreground mb-4">
                 Kamu akan Mempelajari
               </h2>
-              <div className="mt-4">
-                <KurikulumAccordion curriculumData={curriculumData} />
-              </div>
+              <KurikulumAccordion curriculumData={curriculumData} />
             </div>
 
             <div className={cardStyle}>
               <h2 className="text-2xl font-bold text-foreground">
                 Rating dan Review
               </h2>
-              <p className="text-gray-500 mt-4">
-                (Komponen untuk menampilkan daftar review akan ditempatkan di
-                sini)
-              </p>
+              <div className="mt-6 space-y-8">
+                {course.reviews && course.reviews.length > 0 ? (
+                  course.reviews.map((review) => (
+                    <ReviewCard
+                      key={review.id}
+                      name={review.user.name}
+                      role="Alumni Course"
+                      avatarUrl={
+                        review.user.profile_picture_url ||
+                        "/assets/images/avatar.jpg"
+                      }
+                      rating={review.rating}
+                      comment={review.comment}
+                    />
+                  ))
+                ) : (
+                  <p className="text-gray-500">
+                    Belum ada review untuk kelas ini.
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
-          <div className="lg:col-span-1">
+          <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-28">
               <OrderSummaryCard
                 title={course.title}

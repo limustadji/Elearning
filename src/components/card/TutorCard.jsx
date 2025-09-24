@@ -3,8 +3,7 @@ import Image from "next/image";
 
 const TutorProfile = ({ name, title, company, bio, avatarUrl }) => {
   return (
-    <div className="flex items-start gap-4">
-      {" "}
+    <div className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg">
       <div className="relative h-16 w-16 flex-shrink-0">
         <Image
           src={avatarUrl}
@@ -15,7 +14,6 @@ const TutorProfile = ({ name, title, company, bio, avatarUrl }) => {
         />
       </div>
       <div className="flex flex-col">
-        {" "}
         <h4 className="text-lg font-bold text-foreground">{name}</h4>
         <p className="text-base text-gray-600">
           {title} di {company}

@@ -116,6 +116,7 @@
   --line-height-normal: 1.4;
   --line-height-heading: 1.1;
   --line-height-heading4: 1.2;
+  --container-7xl: 1200px;
 }
 
 @layer base {

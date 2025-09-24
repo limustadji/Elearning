@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 
 const CourseCard = ({
-  variant = "default", // 'default', 'mobile', 'discount'
+  variant = "default",
+  isPriority = false,
   title = "Big 4 Auditor Financial Analyst",
   description = "Mulai transformasi dengan instruktur profesional, harga yang terjangkau, dan...",
   authorName = "Jenna Ortega",
@@ -41,15 +42,16 @@ const CourseCard = ({
 
   if (variant === "mobile") {
     return (
-      <div className="flex w-80 flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-4">
+      <div className="flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-4">
         <div className="flex">
           <div className="relative h-20 w-20 flex-shrink-0">
             <Image
               src={imageUrl}
               alt={title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
+              fill
+              priority={isPriority}
+              sizes="80px"
+              className="rounded-lg object-cover"
             />
           </div>
           <div className="flex flex-1 flex-col justify-center pl-4">
@@ -59,8 +61,9 @@ const CourseCard = ({
                 <Image
                   src={authorImage}
                   alt={authorName}
-                  layout="fill"
-                  className="rounded-xl"
+                  fill
+                  sizes="24px"
+                  className="rounded-xl object-cover"
                 />
               </div>
               <div className="ml-2">
@@ -70,7 +73,6 @@ const CourseCard = ({
             </div>
           </div>
         </div>
-
         <div className=" flex items-center justify-between pt-2">
           <div className="flex items-center text-sm">
             <div className="flex">{renderStars()}</div>
@@ -87,26 +89,28 @@ const CourseCard = ({
   }
 
   return (
-    <div className="flex h-106.5 w-96 flex-col rounded-xl border border-gray-200 bg-white p-5">
-      <div className="relative h-48 w-full">
+    <div className="flex w-full flex-col rounded-xl border border-gray-200 bg-white p-5">
+      <div className="relative w-full aspect-video">
         <Image
           src={imageUrl}
           alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-lg"
+          fill
+          priority={isPriority}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="rounded-lg object-cover"
         />
       </div>
       <div className="flex flex-grow flex-col gap-2 pt-4">
         <h6 className="text-lg font-bold">{title}</h6>
-        <p className="text-base text-gray-600">{description}</p>
+        <p className="text-base text-gray-600 line-clamp-2">{description}</p>
         <div className="flex items-center gap-3 pt-2">
           <div className="relative h-10 w-10">
             <Image
               src={authorImage}
               alt={authorName}
-              layout="fill"
-              className="rounded-xl"
+              fill
+              sizes="40px"
+              className="rounded-xl object-cover"
             />
           </div>
           <div>

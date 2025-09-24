@@ -9,6 +9,7 @@ const Logo = () => {
         alt="Videobelajar Logo"
         width={200}
         height={40}
+        style={{ height: "auto", width: "auto" }}
         priority
       />
     </div>

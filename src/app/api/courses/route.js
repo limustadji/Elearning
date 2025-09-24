@@ -9,10 +9,22 @@ export async function GET(request) {
           select: {
             name: true,
             profile_picture_url: true,
+            instructor_data: {
+              select: {
+                title: true,
+                company: true,
+              },
+            },
           },
         },
-        chapters: {
-          orderBy: { order_number: "asc" },
+        course_categories: {
+          include: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
         },
       },
     });

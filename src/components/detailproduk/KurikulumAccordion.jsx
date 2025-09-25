@@ -6,12 +6,12 @@ import ChevronDownIcon from "../icons/ChevronDownIcon";
 
 const AccordionItem = ({ section, isOpen, onClick }) => {
   return (
-    <div className="border-b border-gray-200">
+    <div className=" border-gray-300 ">
       <button
         onClick={onClick}
         className="w-full flex justify-between items-center py-4 text-left"
       >
-        <h3 className="text-lg font-bold text-foreground">{section.title}</h3>
+        <h6 className="text-lg text-primary-default">{section.title}</h6>
         <ChevronDownIcon
           className={`w-6 h-6 text-gray-500 transition-transform duration-300 ${
             isOpen ? "rotate-180" : ""
@@ -23,19 +23,36 @@ const AccordionItem = ({ section, isOpen, onClick }) => {
           isOpen ? "max-h-screen pb-4" : "max-h-0"
         }`}
       >
-        <ul className="flex flex-col gap-3 pl-2">
+        <ul className="flex flex-col gap-y-4">
           {section.lessons.map((lesson, index) => (
-            <li key={index} className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/assets/icons/icon-play-circle.svg"
-                  alt="video icon"
-                  width={24}
-                  height={24}
-                />
-                <span className="text-base text-gray-700">{lesson.title}</span>
+            <li
+              key={index}
+              className="flex items-center justify-between p-4 border border-gray-300 rounded-lg"
+            >
+              <span className="text-base text-gray-700 font-medium">
+                {lesson.title}
+              </span>
+
+              <div className="hidden md:flex items-center gap-x-4 text-gray-500">
+                <div className="flex items-center gap-x-2">
+                  <Image
+                    src="/assets/icons/icon-play-circle.svg"
+                    alt="Tipe video"
+                    width={20}
+                    height={20}
+                  />
+                  <span className="text-sm">Video</span>
+                </div>
+                <div className="flex items-center gap-x-2">
+                  <Image
+                    src="/assets/icons/icon-clock.svg"
+                    alt="Durasi video"
+                    width={20}
+                    height={20}
+                  />
+                  <span className="text-sm">{lesson.duration}</span>
+                </div>
               </div>
-              <span className="text-base text-gray-500">{lesson.duration}</span>
             </li>
           ))}
         </ul>

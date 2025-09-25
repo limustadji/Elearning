@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import DetailProdukHero from "@/components/detailproduk/DetailProdukHero";
-import TutorProfile from "@/components/detailproduk/TutorProfile";
+import TutorCard from "@/components/card/TutorCard";
 import KurikulumAccordion from "@/components/detailproduk/KurikulumAccordion";
 import OrderSummaryCard from "@/components/card/OrderSummaryCard";
-import CourseCard from "@/components/card/CourseCard";
-import ReviewCard from "@/components/card/ReviewCard";
+import RelatedCoursesList from "@/components/detailproduk/RelatedCoursesList";
+import ReviewList from "@/components/detailproduk/ReviewList";
 
 async function getCourseData(id) {
   const res = await fetch(
@@ -90,6 +90,7 @@ export default async function DetailProdukPage({ params }) {
 
         <div className="lg:hidden my-8">
           <OrderSummaryCard
+            variant="mobile"
             title={course.title}
             price={Number(course.price)}
             discountedPrice={Number(course.price) / 2}
@@ -100,21 +101,20 @@ export default async function DetailProdukPage({ params }) {
           />
         </div>
 
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 py-8 lg:py-16">
-          <div className="lg:col-span-2 flex flex-col gap-8">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 lg:gap-x-4 py-8 lg:py-12">
+          <div className="lg:col-span-2 flex flex-col gap-y-8">
             <div className={cardStyle}>
-              <h2 className="text-2xl font-bold text-foreground">Deskripsi</h2>
+              <h5 className=" text-foreground">Deskripsi</h5>
               <p className="text-base text-gray-600 leading-relaxed mt-4">
                 {course.description}
               </p>
             </div>
-
             {instructor && (
               <div className={cardStyle}>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <h5 className="text-2xl font-bold text-foreground mb-6">
                   Belajar bersama Tutor Profesional
-                </h2>
-                <TutorProfile
+                </h5>
+                <TutorCard
                   name={instructor.name}
                   title={instructor.instructor_data?.title || "Instruktur"}
                   company={instructor.instructor_data?.company || "Perusahaan"}
@@ -126,42 +126,22 @@ export default async function DetailProdukPage({ params }) {
                 />
               </div>
             )}
-
             <div className={cardStyle}>
-              <h2 className="text-2xl font-bold text-foreground mb-4">
+              <h5 className="text-2xl font-bold text-foreground mb-4">
                 Kamu akan Mempelajari
-              </h2>
+              </h5>
               <KurikulumAccordion curriculumData={curriculumData} />
             </div>
 
             <div className={cardStyle}>
-              <h2 className="text-2xl font-bold text-foreground">
+              <h5 className="text-2xl font-bold text-foreground">
                 Rating dan Review
-              </h2>
-              <div className="mt-6 space-y-8">
-                {course.reviews && course.reviews.length > 0 ? (
-                  course.reviews.map((review) => (
-                    <ReviewCard
-                      key={review.id}
-                      name={review.user.name}
-                      role="Alumni Course"
-                      avatarUrl={
-                        review.user.profile_picture_url ||
-                        "/assets/images/avatar.jpg"
-                      }
-                      rating={review.rating}
-                      comment={review.comment}
-                    />
-                  ))
-                ) : (
-                  <p className="text-gray-500">
-                    Belum ada review untuk kelas ini.
-                  </p>
-                )}
+              </h5>
+              <div className="mt-6">
+                <ReviewList reviews={course.reviews} />
               </div>
             </div>
           </div>
-
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-28">
               <OrderSummaryCard
@@ -178,40 +158,15 @@ export default async function DetailProdukPage({ params }) {
         </section>
       </div>
 
-      <section className="bg-gray-50 py-16">
+      <section className=" py-6">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-10 text-center">
-            Video Pembelajaran Terkait Lainnya
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedCourses.map((relatedCourse) => (
-              <CourseCard
-                key={relatedCourse.id}
-                title={relatedCourse.title}
-                description={relatedCourse.description}
-                authorName={relatedCourse.instructor.name}
-                authorImage={
-                  relatedCourse.instructor.profile_picture_url ||
-                  "/assets/images/avatar.jpg"
-                }
-                authorRole={
-                  relatedCourse.instructor.instructor_data?.title ||
-                  "Instructor"
-                }
-                authorCompany={
-                  relatedCourse.instructor.instructor_data?.company || ""
-                }
-                rating={
-                  relatedCourse.averageRating
-                    ? relatedCourse.averageRating.toFixed(1)
-                    : "0.0"
-                }
-                reviewCount={relatedCourse.totalReviews || 0}
-                price={Number(relatedCourse.price)}
-                imageUrl={relatedCourse.thumbnail_url}
-              />
-            ))}
+          <div className="text-start mb-10">
+            <h3 className="text-3xl">Video Pembelajaran Terkait Lainnya</h3>
+            <p className="mt-2 text-lg">
+              Ekspansi Pengetahuan Anda dengan Rekomendasi Spesial Kami!
+            </p>
           </div>
+          <RelatedCoursesList courses={relatedCourses} />
         </div>
       </section>
     </div>

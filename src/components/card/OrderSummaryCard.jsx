@@ -31,7 +31,7 @@ const OrderSummaryCard = ({
   return (
     <div
       className={`flex flex-col bg-white rounded-lg border border-gray-200 p-6 gap-6 shadow-sm ${
-        isMobile ? "w-80 h-auto" : "w-91.5 h-auto"
+        isMobile ? "w-full h-auto" : "w-91.5 h-auto"
       }`}
     >
       <div className="flex flex-col gap-4">

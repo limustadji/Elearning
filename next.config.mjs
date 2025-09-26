@@ -28,6 +28,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "iconlogovector.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "1000logos.net",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

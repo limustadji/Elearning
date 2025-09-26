@@ -112,7 +112,7 @@ export default function HomePage() {
               {currentCourses.map((course, index) => (
                 <CourseCard
                   key={course.id}
-                  isPriority={index < 3}
+                  isPriority={index === 0}
                   variant={isMobile ? "mobile" : "default"}
                   title={course.title}
                   description={course.description}

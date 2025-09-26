@@ -31,8 +31,10 @@ async function getRelatedCourses(id) {
 }
 
 export default async function DetailProdukPage({ params }) {
-  const course = await getCourseData(params.id);
-  const relatedCourses = await getRelatedCourses(params.id);
+  const [course, relatedCourses] = await Promise.all([
+    getCourseData(params.id),
+    getRelatedCourses(params.id),
+  ]);
 
   if (!course) {
     notFound();

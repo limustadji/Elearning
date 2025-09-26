@@ -126,6 +126,18 @@ const Navbar = ({
         </div>
       </div>
 
+      {navType === "payment" && (
+        <div className="md:hidden border-t border-gray-200">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Stepper currentStep={currentStep}>
+              <Step title="Pilih Metode" />
+              <Step title="Bayar" />
+              <Step title="Selesai" />
+            </Stepper>
+          </div>
+        </div>
+      )}
+
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

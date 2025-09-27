@@ -174,10 +174,31 @@ const RegisterForm = () => {
     setIsLoading(true);
     setToast({ ...toast, show: false });
 
-    if (formData.password !== formData.confirmPassword) {
+    const { name, email, password, confirmPassword } = formData;
+    if (!name || !email || !password || !confirmPassword) {
+      setToast({
+        show: true,
+        message: "Semua kolom wajib diisi.",
+        type: "error",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
       setToast({
         show: true,
         message: "Konfirmasi kata sandi tidak cocok.",
+        type: "error",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      setToast({
+        show: true,
+        message: "Kata sandi minimal harus 8 karakter.",
         type: "error",
       });
       setIsLoading(false);
@@ -200,16 +221,12 @@ const RegisterForm = () => {
       }
       setToast({
         show: true,
-        message: "Registrasi berhasil!",
+        message: "Registrasi berhasil! Silakan masuk.",
         type: "success",
       });
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirmPassword: "",
-      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
     } catch (err) {
       setToast({ show: true, message: err.message, type: "error" });
     } finally {

@@ -8,7 +8,6 @@ import Button from "@/components/button/Button";
 import CountdownTimer from "@/components/payment/CountdownTimer";
 import InstructionAccordion from "@/components/payment/InstructionAccordion";
 
-
 const BayarClientPage = ({ orderData }) => {
   const router = useRouter();
 
@@ -18,7 +17,7 @@ const BayarClientPage = ({ orderData }) => {
   const instructions = {
     atm: (
       <ol className="list-decimal pl-5 space-y-2">
-        <li>Masukkan kartu ATM dan PIN BCA Anda.</li>
+        <li>Masukkan kartu ATM dan PIN Anda.</li>
         <li>
           Di menu utama, pilih "Transaksi Lainnya". Pilih "Transfer". Pilih "Ke
           BCA Virtual Account".
@@ -90,7 +89,7 @@ const BayarClientPage = ({ orderData }) => {
   const adminFee = 7000;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="flex items-center justify-center bg-orange-100 text-orange-800 p-4 rounded-lg mb-8">
           <p className="mr-4">Selesaikan pemesanan dalam</p>
@@ -113,7 +112,7 @@ const BayarClientPage = ({ orderData }) => {
               <p className="text-gray-600">{paymentMethod.name}</p>
               <div className="flex items-center justify-center gap-4 my-4">
                 <p className="text-2xl font-bold text-foreground tracking-wider">
-                  {invoice.invoice_number.replace("INV", "").substring(0, 16)}
+                  {invoice.invoice_number.replace("INV-", "").substring(0, 16)}
                 </p>
                 <button className="text-red-500 font-bold hover:underline">
                   Salin

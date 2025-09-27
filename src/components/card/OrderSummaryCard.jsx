@@ -1,15 +1,9 @@
 import React from "react";
+import { formatRupiah, renderStars } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../button/Button";
 import Chip from "../button/Chip";
-
-const formatRupiah = (value) => {
-  if (value >= 1000) {
-    return `Rp ${value / 1000}K`;
-  }
-  return `Rp ${value}`;
-};
 
 const OrderSummaryCard = ({
   variant = "default",

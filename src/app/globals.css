@@ -12,7 +12,7 @@
 
 :root {
   /* Light Mode */
-  --background-hsl: 50, 100%, 97.65%;
+  --background-hsl: 50, 100%, 97%;
   --foreground-hsl: 220.91, 27.5%, 15.69%;
   --foreground-secondary-hsl: 0, 0%, 20%;
   --foreground-disabled-hsl: 265, 10.17%, 23.14%;

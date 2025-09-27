@@ -10,7 +10,7 @@ const CountdownTimer = ({ initialMinutes = 10 }) => {
 
     const intervalId = setInterval(() => {
       setTimeLeft(timeLeft - 1);
-    }, 10000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [timeLeft]);

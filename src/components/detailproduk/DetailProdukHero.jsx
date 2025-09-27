@@ -1,4 +1,5 @@
 import React from "react";
+import { formatRupiah, renderStars } from "@/lib/utils";
 
 const DetailProdukHero = ({
   title,
@@ -7,22 +8,6 @@ const DetailProdukHero = ({
   reviewCount,
   imageUrl,
 }) => {
-  const renderStars = () => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span
-          key={i}
-          className={i <= fullStars ? "text-yellow-400" : "text-gray-400"}
-        >
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
-
   return (
     <div
       className="relative w-full h-auto md:h-96 bg-cover bg-center rounded-2xl overflow-hidden flex items-center"

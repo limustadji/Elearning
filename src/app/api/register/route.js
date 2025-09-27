@@ -9,8 +9,20 @@ export async function POST(request) {
     const body = await request.json();
     const { name, email, password } = body;
 
+    // 1. Validasi input dasar
     if (!name || !email || !password) {
-      return new NextResponse("Missing name, email, or password", {
+      return new NextResponse("Nama, email, dan kata sandi harus diisi.", {
+        status: 400,
+      });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new NextResponse("Format email tidak valid.", { status: 400 });
+    }
+
+    if (password.length < 8) {
+      return new NextResponse("Kata sandi minimal harus 8 karakter.", {
         status: 400,
       });
     }
@@ -20,7 +32,7 @@ export async function POST(request) {
     });
 
     if (exist) {
-      return new NextResponse("User already exists", { status: 400 });
+      return new NextResponse("Email sudah terdaftar.", { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,9 +46,10 @@ export async function POST(request) {
       },
     });
 
-    return NextResponse.json(user);
+    const { password_hash, ...userWithoutPassword } = user;
+    return NextResponse.json(userWithoutPassword);
   } catch (error) {
     console.log("REGISTRATION ERROR", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse("Terjadi kesalahan internal.", { status: 500 });
   }
 }

@@ -1,13 +1,7 @@
 import React from "react";
+import { formatRupiah, renderStars } from "@/lib/utils";
 import Image from "next/image";
 import Chip from "../button/Chip";
-
-const formatRupiah = (value) => {
-  if (value >= 1000) {
-    return `Rp ${value / 1000}K`;
-  }
-  return `Rp ${value}`;
-};
 
 const PurchaseSummaryCard = ({
   title = "Gapai Karier Impianmu sebagai Seorang UI/UX Designer & Product Manager.",

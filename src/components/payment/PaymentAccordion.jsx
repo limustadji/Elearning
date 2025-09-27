@@ -6,6 +6,7 @@ import ChevronDownIcon from "../icons/ChevronDownIcon";
 
 const PaymentMethodItem = ({ method, selected, onSelect }) => (
   <button
+    type="button"
     onClick={() => onSelect(method.id)}
     className="w-full flex items-center justify-between px-5 py-4 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors"
   >
@@ -48,6 +49,7 @@ const PaymentAccordion = ({
   return (
     <div className="flex flex-col gap-5">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center px-5 py-4 bg-transparent border rounded-xl border-gray-300"
       >
@@ -63,14 +65,15 @@ const PaymentAccordion = ({
           isOpen ? "max-h-screen" : "max-h-0"
         }`}
       >
-        {methods.map((method) => (
-          <PaymentMethodItem
-            key={method.id}
-            method={method}
-            selected={selectedMethod === method.id}
-            onSelect={onSelectMethod}
-          />
-        ))}
+        {isOpen &&
+          methods.map((method) => (
+            <PaymentMethodItem
+              key={method.id}
+              method={method}
+              selected={selectedMethod === method.id}
+              onSelect={onSelectMethod}
+            />
+          ))}
       </div>
     </div>
   );

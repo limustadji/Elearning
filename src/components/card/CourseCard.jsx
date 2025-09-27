@@ -1,3 +1,4 @@
+import { formatRupiah, renderStars } from "@/lib/utils";
 import React from "react";
 import Image from "next/image";
 
@@ -16,30 +17,6 @@ const CourseCard = ({
   discountedPrice,
   imageUrl = "/assets/images/cover7.jpg",
 }) => {
-  const renderStars = () => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span
-          key={i}
-          className={`star ${
-            i <= Math.floor(rating) ? "text-yellow-400" : "text-gray-300"
-          }`}
-        >
-          ★
-        </span>
-      );
-    }
-    return stars;
-  };
-
-  const formatPriceK = (value) => {
-    if (value >= 1000) {
-      return `Rp ${value / 1000}K`;
-    }
-    return `Rp ${value}`;
-  };
-
   const mobileClasses =
     "flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1";
 
@@ -95,15 +72,15 @@ const CourseCard = ({
         {variant === "discount" && discountedPrice ? (
           <div className="flex items-center gap-2">
             <p className="text-lg font-bold text-gray-400 line-through">
-              {formatPriceK(price)}
+              {formatRupiah(price)}
             </p>
             <p className="text-xl font-bold text-green-500">
-              {formatPriceK(discountedPrice)}
+              {formatRupiah(discountedPrice)}
             </p>
           </div>
         ) : (
           <p className="text-xl font-bold text-primary-default">
-            {formatPriceK(price)}
+            {formatRupiah(price)}
           </p>
         )}
       </div>

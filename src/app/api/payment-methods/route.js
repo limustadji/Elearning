@@ -18,8 +18,8 @@ export async function GET() {
         )
       ),
       creditCard: paymentMethods.filter((m) =>
-        ["visa", "master card", "jcb"].some((c) =>
-          m.name.toLowerCase().includes(c)
+        ["visa", "master card", "jcb", "creditcard"].some((c) =>
+          m.name.toLowerCase().replace(/\s+/g, "").includes(c)
         )
       ),
     };
@@ -27,6 +27,9 @@ export async function GET() {
     return NextResponse.json(groupedMethods);
   } catch (error) {
     console.error("Error fetching payment methods:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse(
+      JSON.stringify({ message: "Internal Server Error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

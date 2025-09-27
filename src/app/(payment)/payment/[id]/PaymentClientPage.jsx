@@ -5,10 +5,15 @@ import { useSession } from "next-auth/react";
 import Button from "@/components/button/Button";
 import PurchaseSummaryCard from "@/components/card/PurchaseSummaryCard";
 import PaymentAccordion from "@/components/payment/PaymentAccordion";
-import { createOrderAndRedirect } from "./actions"; // Impor Server Action
+import { createOrderAndRedirect } from "./actions";
 
-// Komponen OrderTotalsCard tetap sama, hanya perlu sedikit penyesuaian
-const OrderTotalsCard = ({ subtotal, adminFee, total, courseTitle }) => {
+const OrderTotalsCard = ({
+  subtotal,
+  adminFee,
+  total,
+  courseTitle,
+  isButtonDisabled,
+}) => {
   const formatCurrency = (value) => `Rp ${value.toLocaleString("id-ID")}`;
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col gap-4">
@@ -33,15 +38,15 @@ const OrderTotalsCard = ({ subtotal, adminFee, total, courseTitle }) => {
           {formatCurrency(total)}
         </span>
       </div>
-      {/* Tombol sekarang adalah tipe 'submit' untuk form */}
       <Button
         type="submit"
         variant="solid"
-        color="primary"
+        color={isButtonDisabled ? "disabled" : "primary"}
         size="md"
         className="w-full mt-2"
+        disabled={isButtonDisabled}
       >
-        Beli Sekarang
+        {isButtonDisabled ? "Pilih Metode Bayar" : "Beli Sekarang"}
       </Button>
     </div>
   );
@@ -54,11 +59,29 @@ export default function PaymentClientPage({ course }) {
     eWallet: [],
     creditCard: [],
   });
-  const [selectedMethod, setSelectedMethod] = useState(1);
+
+  // --- PERBAIKAN 2: Ubah nilai awal state menjadi null ---
+  const [selectedMethod, setSelectedMethod] = useState(null);
   const [isFetchingMethods, setIsFetchingMethods] = useState(true);
 
   useEffect(() => {
-    // ... useEffect untuk fetch payment methods tetap sama
+    const fetchPaymentMethods = async () => {
+      try {
+        setIsFetchingMethods(true);
+        const response = await fetch("/api/payment-methods");
+        if (!response.ok) {
+          throw new Error("Gagal memuat metode pembayaran");
+        }
+        const data = await response.json();
+        setPaymentMethods(data);
+      } catch (error) {
+        console.error("Fetch Payment Methods Error:", error);
+      } finally {
+        setIsFetchingMethods(false);
+      }
+    };
+
+    fetchPaymentMethods();
   }, []);
 
   const discountedPrice = Number(course.price) / 2;
@@ -80,17 +103,28 @@ export default function PaymentClientPage({ course }) {
 
   return (
     <form action={createOrderAndRedirect}>
-      {/* Input tersembunyi untuk mengirim data ke Server Action */}
       <input type="hidden" name="courseId" value={course.id} />
       <input type="hidden" name="totalAmount" value={total} />
-      <input type="hidden" name="paymentMethodId" value={selectedMethod} />
+      <input
+        type="hidden"
+        name="paymentMethodId"
+        value={selectedMethod || ""}
+      />
 
       <div className="min-h-screen">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div className="lg:col-span-2 flex flex-col gap-y-8">
               <div className="lg:hidden">
-                <PurchaseSummaryCard /* ...props... */ />
+                <PurchaseSummaryCard
+                  title={course.title}
+                  price={Number(course.price)}
+                  discountedPrice={discountedPrice}
+                  discountPercentage={50}
+                  includes={courseIncludes}
+                  language="Bahasa Indonesia"
+                  imageUrl={course.thumbnail_url}
+                />
               </div>
               <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm max-w-[798px]">
                 <h2 className="text-xl font-bold text-foreground mb-6">
@@ -121,15 +155,24 @@ export default function PaymentClientPage({ course }) {
                   </div>
                 )}
               </div>
+              <div className="md:hidden">
+                <OrderTotalsCard
+                  subtotal={discountedPrice}
+                  adminFee={adminFee}
+                  total={total}
+                  courseTitle={course.title}
+                  isButtonDisabled={!selectedMethod}
+                />
+              </div>
+            </div>
+            <div className="hidden lg:block lg:col-span-1 sticky top-28">
               <OrderTotalsCard
                 subtotal={discountedPrice}
                 adminFee={adminFee}
                 total={total}
                 courseTitle={course.title}
+                isButtonDisabled={!selectedMethod}
               />
-            </div>
-            <div className="hidden lg:block lg:col-span-1 sticky top-28">
-              <PurchaseSummaryCard /* ...props... */ />
             </div>
           </div>
         </div>

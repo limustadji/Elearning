@@ -67,7 +67,6 @@ const LoginForm = () => {
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        otomatis,
         email: formData.email,
         password: formData.password,
       });

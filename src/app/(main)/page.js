@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Hero from "@/components/hero/Hero";
 import Newsletter from "@/components/newsletter/Newsletter";
@@ -110,28 +111,29 @@ export default function HomePage() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
               {currentCourses.map((course, index) => (
-                <CourseCard
-                  key={course.id}
-                  isPriority={index === 0}
-                  variant={isMobile ? "mobile" : "default"}
-                  title={course.title}
-                  description={course.description}
-                  authorName={course.instructor.name}
-                  authorImage={
-                    course.instructor.profile_picture_url ||
-                    "/assets/images/avatar.jpg"
-                  }
-                  authorRole={
-                    course.instructor.instructor_data?.title || "Instructor"
-                  }
-                  authorCompany={
-                    course.instructor.instructor_data?.company || ""
-                  }
-                  rating={4.5}
-                  reviewCount={86}
-                  price={Number(course.price)}
-                  imageUrl={course.thumbnail_url}
-                />
+                <Link href={`/courses/${course.id}`} key={course.id}>
+                  <CourseCard
+                    isPriority={index === 0}
+                    variant={isMobile ? "mobile" : "default"}
+                    title={course.title}
+                    description={course.description}
+                    authorName={course.instructor.name}
+                    authorImage={
+                      course.instructor.profile_picture_url ||
+                      "/assets/images/avatar.jpg"
+                    }
+                    authorRole={
+                      course.instructor.instructor_data?.title || "Instructor"
+                    }
+                    authorCompany={
+                      course.instructor.instructor_data?.company || ""
+                    }
+                    rating={4.5}
+                    reviewCount={86}
+                    price={Number(course.price)}
+                    imageUrl={course.thumbnail_url}
+                  />
+                </Link>
               ))}
             </div>
             <div className="mt-12 flex justify-end">

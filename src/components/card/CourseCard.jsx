@@ -40,56 +40,18 @@ const CourseCard = ({
     return `Rp ${value}`;
   };
 
+  const mobileClasses =
+    "flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1";
+
   if (variant === "mobile") {
-    return (
-      <div className="flex w-full max-w-sm flex-col overflow-hidden rounded-lg border border-gray-200 bg-white p-4">
-        <div className="flex">
-          <div className="relative h-20 w-20 flex-shrink-0">
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              priority={isPriority}
-              sizes="80px"
-              className="rounded-lg object-cover"
-            />
-          </div>
-          <div className="flex flex-1 flex-col justify-center pl-4">
-            <h6 className="text-base font-bold leading-tight">{title}</h6>
-            <div className="mt-1 flex items-center">
-              <div className="relative h-6 w-6">
-                <Image
-                  src={authorImage}
-                  alt={authorName}
-                  fill
-                  sizes="24px"
-                  className="rounded-xl object-cover"
-                />
-              </div>
-              <div className="ml-2">
-                <p className="text-sm font-semibold">{authorName}</p>
-                <p className="text-xs">{authorRole}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className=" flex items-center justify-between pt-2">
-          <div className="flex items-center text-sm">
-            <div className="flex">{renderStars()}</div>
-            <span className="ml-1 ">
-              {rating} ({reviewCount})
-            </span>
-          </div>
-          <p className="text-base font-bold text-primary-default">
-            {formatPriceK(price)}
-          </p>
-        </div>
-      </div>
-    );
+    return <div className={mobileClasses}></div>;
   }
 
+  const defaultClasses =
+    "flex w-full flex-col rounded-xl border border-gray-200 bg-white p-5 h-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-2";
+
   return (
-    <div className="flex w-full flex-col rounded-xl border border-gray-200 bg-white p-5">
+    <div className={defaultClasses}>
       <div className="relative w-full aspect-video">
         <Image
           src={imageUrl}

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 import LogoutIcon from "../icons/LogoutIcon";
 
 const UserProfile = ({ avatar }) => {
@@ -47,7 +48,10 @@ const UserProfile = ({ avatar }) => {
             Pesanan Saya
           </a>
           <div className="border-t border-gray-100 my-1"></div>
-          <button className="w-full text-left flex items-center justify-between px-5 py-3 text-base text-error-default hover:bg-gray-50">
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="w-full text-left flex items-center justify-between px-5 py-3 text-base text-error-default hover:bg-gray-50"
+          >
             <span>Keluar</span>
             <LogoutIcon className="w-5 h-5" />
           </button>

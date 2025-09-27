@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import Logo from "./Logo";
 import NavLinks from "./NavLink";
 import UserProfile from "./UserProfile";
@@ -13,14 +15,15 @@ import ProgressDropdown from "../dropdown/ProgressDropdown";
 import HamburgerIcon from "../icons/HamburgerIcon";
 
 const Navbar = ({
-  isLoggedIn = false,
   navType = "main",
   courseState = "inProgress",
   courseTitle = "Foundations of User Experience Design",
   progress = 83,
   currentStep = 1,
 }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const isLoggedIn = status === "authenticated";
 
   const truncateTitle = (title) => {
     return title.split(" ")[0] + "...";
@@ -28,11 +31,9 @@ const Navbar = ({
 
   return (
     <nav className="bg-white shadow-md">
-      {/* Konten Utama Navbar */}
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="hidden md:flex items-center justify-between w-full">
-            {/* Sisi Kiri Desktop */}
             <div className="flex items-center">
               {navType === "course" ? (
                 <UnstyledButton iconLeft={true}>
@@ -42,8 +43,6 @@ const Navbar = ({
                 <Logo />
               )}
             </div>
-
-            {/* Sisi Kanan Desktop */}
             <div className="flex items-center">
               {navType === "main" && (
                 <>
@@ -53,12 +52,16 @@ const Navbar = ({
                       <UserProfile avatar="/assets/images/avatar.jpg" />
                     ) : (
                       <div className="flex items-center space-x-2">
-                        <Button variant="solid" color="primary" size="md">
-                          Login
-                        </Button>
-                        <Button variant="outline" color="primary" size="md">
-                          Register
-                        </Button>
+                        <Link href="/login">
+                          <Button variant="solid" color="primary" size="md">
+                            Login
+                          </Button>
+                        </Link>
+                        <Link href="/register">
+                          <Button variant="outline" color="primary" size="md">
+                            Register
+                          </Button>
+                        </Link>
                       </div>
                     )}
                   </div>
@@ -85,8 +88,6 @@ const Navbar = ({
               )}
             </div>
           </div>
-
-          {/*TAMPILAN MOBILE*/}
           <div className="md:hidden flex items-center justify-between w-full">
             {(navType === "main" ||
               navType === "auth" ||
@@ -98,7 +99,6 @@ const Navbar = ({
                 </button>
               </>
             )}
-
             {navType === "course" && (
               <>
                 <UnstyledButton iconLeft={true}>
@@ -125,7 +125,6 @@ const Navbar = ({
           </div>
         </div>
       </div>
-
       {navType === "payment" && (
         <div className="md:hidden border-t border-gray-200">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -137,7 +136,6 @@ const Navbar = ({
           </div>
         </div>
       )}
-
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -146,26 +144,30 @@ const Navbar = ({
               {isLoggedIn ? (
                 <div className="flex items-center gap-x-3">
                   <UserProfile avatar="/assets/images/avatar.jpg" />
-                  <p className="font-semibold">User Name</p>
+                  <p className="font-semibold">{session.user.name}</p>
                 </div>
               ) : (
                 <div className="flex flex-col space-y-2">
-                  <Button
-                    variant="solid"
-                    color="primary"
-                    size="md"
-                    className="w-full"
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    variant="outline"
-                    color="primary"
-                    size="md"
-                    className="w-full"
-                  >
-                    Register
-                  </Button>
+                  <Link href="/login">
+                    <Button
+                      variant="solid"
+                      color="primary"
+                      size="md"
+                      className="w-full"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button
+                      variant="outline"
+                      color="primary"
+                      size="md"
+                      className="w-full"
+                    >
+                      Register
+                    </Button>
+                  </Link>
                 </div>
               )}
             </div>

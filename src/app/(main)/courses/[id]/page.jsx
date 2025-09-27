@@ -154,6 +154,7 @@ export default async function DetailProdukPage({ params }) {
                 specialOfferText="Penawaran spesial tersisa 2 hari lagi!"
                 includes={courseIncludes}
                 language="Bahasa Indonesia"
+                checkoutUrl={`/payment/${params.id}`}
               />
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Button from "../button/Button";
 import Chip from "../button/Chip";
 
@@ -25,6 +26,7 @@ const OrderSummaryCard = ({
     { icon: "/assets/icons/icon-file-edit.svg", text: "Pretest" },
   ],
   language = "Bahasa Indonesia",
+  checkoutUrl,
 }) => {
   const isMobile = variant === "mobile";
 
@@ -68,9 +70,11 @@ const OrderSummaryCard = ({
         )}
       </div>
 
-      <Button variant="solid" color="primary" size="md" className="w-full">
-        Beli Sekarang
-      </Button>
+      <Link href={checkoutUrl || "#"}>
+        <Button variant="solid" color="primary" size="md" className="w-full">
+          Beli Sekarang
+        </Button>
+      </Link>
 
       <div className="flex flex-col gap-4">
         <h3 className="text-base font-bold text-foreground">
